@@ -1,0 +1,48 @@
+;; Time vars
+(defpoll HOUR :interval "5s" `date +\"%I\"`)
+(defpoll MIN :interval "5s" `date +\"%M\"`)
+(defpoll MER :interval "5s" `date +\"%p\"`)
+(defpoll DAY :interval "5s" `date +\"%A\"`)
+
+;; Uptime vars
+(defpoll UPHOUR :interval "5s" `uptime -p | awk '{print $2 \" \" $3}' | sed 's/,//g'`)
+(defpoll UPMIN :interval "5s" `uptime -p | awk '{print $4 \" \" $5}'`)
+
+
+;; clock
+(defwidget clock [] 
+	(box :class "genwin" :orientation "h" :spacing 50 :space-evenly false :vexpand "false" :hexpand "false" 
+		(box :orientation "h" :spacing 0
+			(label :class "time_hour" :valign "start" :wrap "true" :limit-width 25 :text HOUR)
+			(label :class "time_min" :valign "end" :wrap "true" :limit-width 25 :text MIN))
+		(box :orientation "v" :spacing 0 
+			(label :class "time_mer" :valign "start" :halign "end" :wrap "true" :limit-width 25 :text MER)
+			(label :class "time_day" :valign "end" :halign "end" :wrap "true" :limit-width 25 :text DAY))))
+
+;; uptime
+(defwidget uptime [] 
+	(box :class "genwin" 
+		(box :orientation "h" :halign "center" :spacing 40 :space-evenly "false" :vexpand "false" :hexpand "false" 
+			(label :class "icontimer" :valign "center" :text "祥")
+			(box :orientation "v" :valign "center" :spacing 0 :space-evenly "false" :vexpand "false" :hexpand "false" 
+				(label :class "uphour" :halign "start" :wrap "true" :limit-width 25 :text UPHOUR)
+				(label :class "upmin" :halign "start" :wrap "true" :limit-width 25 :text UPMIN)))))
+
+
+;; clock
+(defwindow clock   :monitor 0
+  :geometry (geometry :x "200px"
+                      :y "50px"
+                      :width "340px"
+                      :height "100px"
+                      :anchor "top left")
+  :stacking "fg"
+  :windowtype "dock"
+  :reserve (struts :distance "44px" :side "top")
+  :wm-ignore false
+					(clock))
+
+;; uptime
+(defwindow uptime :stacking "fg" :focusable "false" :screen 1 
+	    :geometry (geometry :x 515 :y 320 :width 350 :height 155)
+					(uptime))

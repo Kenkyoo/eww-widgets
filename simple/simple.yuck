@@ -1,0 +1,32 @@
+;; Variables
+(defvar my_phrase "¡Hola desde EWW!")
+
+;; Ventana del widget
+(defwindow myWidget
+  :monitor 0
+  :geometry (geometry 
+    :x "20px"
+    :y "20px"
+    :width "300px"
+    :height "100px"
+    :anchor "top left")
+  :stacking "overlay"
+  :exclusive false
+  :focusable false
+  
+  ;; Contenido del widget
+  (box 
+    :class "main-container"
+    :orientation "v"
+    :space-evenly false
+    :spacing 10
+    
+    (label 
+      :class "title"
+      :text "Mi Widget")
+    
+    (label 
+      :class "phrase"
+      :text my_phrase)
+  )
+)

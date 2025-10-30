@@ -1,0 +1,7 @@
+(include "variables.yuck")
+(include "date/date.yuck")
+(include "actions/actions.yuck")
+(include "powermenu/powermenu.yuck")
+(include "dashboard/dashboard.yuck")
+(include "weather/weather.yuck")
+(include "clock/clock.yuck")

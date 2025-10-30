@@ -1,0 +1,33 @@
+;; Un solo poll que obtiene todos los datos en formato JSON
+(defpoll WEATHER_DATA :interval "15m" 
+  :initial '{"icon":"󰖙","temp":"--°C","hex":"#adadff","stat":"Cargando...","quote":"Obteniendo datos..."}'
+  `scripts/weather_info.sh`)
+
+;; Widget del clima
+(defwidget weather [] 
+  (box :class "genwin" 
+    (box :orientation "v" :spacing 10 :space-evenly false :vexpand false :hexpand false 
+      (box :orientation "h" :vexpand false :hexpand false 
+        (label :class "iconweather" 
+               :halign "start" 
+               :style "color: ${WEATHER_DATA.hex};" 
+               :text {WEATHER_DATA.icon})
+        (label :class "label_temp" 
+               :halign "end" 
+               :text {WEATHER_DATA.temp}))
+      (box :orientation "v" :spacing 10 :halign "center" :space-evenly false :vexpand false :hexpand false 
+        (label :class "label_stat" :text {WEATHER_DATA.stat})
+        (label :class "label_quote" :text {WEATHER_DATA.quote})))))
+
+;; Ventana del clima
+(defwindow weather
+  :monitor 0
+  :geometry (geometry :x "5px"
+                      :y "50px"
+                      :width "340px"
+                      :height "250px"
+                      :anchor "top center")
+  :stacking "fg"
+  :windowtype "dock"
+  :wm-ignore false
+  (weather))
